@@ -16,8 +16,9 @@
 #include "file.h"
 #include "fcntl.h"
 
-// TODO: implement the getreadcount() system call
+// TODO: count: save how mant times the read() is called
 static int count = 0;
+// initialize a spinlock
 static struct spinlock lock = {
     .locked = 0,
     .name = "readCountLock",
@@ -81,7 +82,8 @@ int sys_read(void)
   int n;
   char *p;
 
-  // TODO: change read()
+  // TODO: change read(), every time call read, incerment count
+  // count++ is the critical section
   acquire(&lock);
   count++;
   release(&lock);

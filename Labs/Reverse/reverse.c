@@ -10,6 +10,38 @@ typedef struct
     struct linkedStack *next;
 } linkedStack;
 
+void run(FILE *in, FILE *out)
+{
+    __ssize_t read;
+    size_t len = 0;
+    linkedStack head;
+    getline(&head.line, &len, in);
+    head.next = NULL;
+    linkedStack *curr = &head;
+    linkedStack *new = malloc(sizeof(linkedStack));
+    if (new == NULL)
+    {
+        fprintf(stderr, "malloc failed\n");
+        exit(1);
+    }
+    while ((read = getline(&new->line, &len, in)) != -1)
+    {
+        new->next = curr;
+        curr = new;
+        new = malloc(sizeof(linkedStack));
+        if (new == NULL)
+        {
+            fprintf(stderr, "malloc failed\n");
+            exit(1);
+        }
+    }
+    while (curr != NULL)
+    {
+        fprintf(out, curr->line);
+        curr = curr->next;
+    }
+}
+
 int main(int argc, char **argv)
 {
     if (argc > 3)
@@ -20,34 +52,7 @@ int main(int argc, char **argv)
 
     if (argc == 1)
     {
-        __ssize_t read;
-        size_t len = 0;
-        linkedStack head;
-        getline(&head.line, &len, stdin);
-        head.next = NULL;
-        linkedStack *curr = &head;
-        linkedStack *new = malloc(sizeof(linkedStack));
-        if (new == NULL)
-        {
-            fprintf(stderr, "malloc failed\n");
-            exit(1);
-        }
-        while ((read = getline(&new->line, &len, stdin)) != -1)
-        {
-            new->next = curr;
-            curr = new;
-            new = malloc(sizeof(linkedStack));
-            if (new == NULL)
-            {
-                fprintf(stderr, "malloc failed\n");
-                exit(1);
-            }
-        }
-        while (curr != NULL)
-        {
-            fprintf(stdout, curr->line);
-            curr = curr->next;
-        }
+        run(stdin, stdout);
         exit(0);
     }
 
@@ -60,34 +65,7 @@ int main(int argc, char **argv)
             exit(1);
         }
 
-        __ssize_t read;
-        size_t len = 0;
-        linkedStack head;
-        getline(&head.line, &len, file);
-        head.next = NULL;
-        linkedStack *curr = &head;
-        linkedStack *new = malloc(sizeof(linkedStack));
-        if (new == NULL)
-        {
-            fprintf(stderr, "malloc failed\n");
-            exit(1);
-        }
-        while ((read = getline(&new->line, &len, file)) != -1)
-        {
-            new->next = curr;
-            curr = new;
-            new = malloc(sizeof(linkedStack));
-            if (new == NULL)
-            {
-                fprintf(stderr, "malloc failed\n");
-                exit(1);
-            }
-        }
-        while (curr != NULL)
-        {
-            fprintf(stdout, curr->line);
-            curr = curr->next;
-        }
+        run(file, stdout);
         exit(0);
     }
 
@@ -111,34 +89,7 @@ int main(int argc, char **argv)
         }
         FILE *out = fopen(argv[2], "w");
 
-        __ssize_t read;
-        size_t len = 0;
-        linkedStack head;
-        getline(&head.line, &len, in);
-        head.next = NULL;
-        linkedStack *curr = &head;
-        linkedStack *new = malloc(sizeof(linkedStack));
-        if (new == NULL)
-        {
-            fprintf(stderr, "malloc failed\n");
-            exit(1);
-        }
-        while ((read = getline(&new->line, &len, in)) != -1)
-        {
-            new->next = curr;
-            curr = new;
-            new = malloc(sizeof(linkedStack));
-            if (new == NULL)
-            {
-                fprintf(stderr, "malloc failed\n");
-                exit(1);
-            }
-        }
-        while (curr != NULL)
-        {
-            fprintf(out, curr->line);
-            curr = curr->next;
-        }
+        run(in, out);
         exit(0);
     }
 }

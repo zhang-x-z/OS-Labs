@@ -20,5 +20,5 @@
 #define SYS_link 19
 #define SYS_mkdir 20
 #define SYS_close 21
-// TODO: add a system call getreadcount()
+// TODO: add a system call and assign 22 to it
 #define SYS_getreadcount 22
