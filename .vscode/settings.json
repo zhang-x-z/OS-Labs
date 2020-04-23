@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "proc.h": "c",
+        "file.h": "c",
+        "user.h": "c",
+        "limits": "cpp",
+        "stat.h": "c",
+        "spinlock.h": "c",
+        "sleeplock.h": "c"
+    }
+}
