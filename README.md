@@ -8,5 +8,6 @@
 - [MIT操作系统课程](https://pdos.csail.mit.edu/6.828/2019/xv6.html)
 - [Xv6-Books](https://pdos.csail.mit.edu/6.828/2019/xv6/book-riscv-rev0.pdf)
 ### 当前进度
-- 完成Reverse, Unix Utils
-- 完成Xv6-SysCall (Part 1)
+- 完成Reverse, Unix Utils（在master分支下）
+- 完成Xv6-SysCall (Part 1，Part 2)
+- 完成kernel-thread
